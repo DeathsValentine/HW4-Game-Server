@@ -110,6 +110,15 @@ public class ServerSend
         }
     }
 
+    public static void PlayerDisconnected(int playerId)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.PlayerDisconnected))
+        {
+            _packet.Write(playerId);
+            SendTCPDataToAll(_packet);
+        }
+    }
+
     public static void UDPTest(int _toClient)
     {
         using (Packet _packet = new Packet((int)ServerPackets.udpTest))

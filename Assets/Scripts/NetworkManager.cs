@@ -28,16 +28,21 @@ public class NetworkManager : MonoBehaviour
 
         // If Unity Editor (because it will jam up the socket when trying to relog 
         //Comment out to test in editor
-        #if UNITY_EDITOR
-        Debug.Log("Build the project to start the server!");
+        //#if UNITY_EDITOR
+        //Debug.Log("Build the project to start the server!");
 
-        #else
+        //#else
         Server.Start(2, 30033); // Start(max players, port)
-        #endif
+        //#endif
+    }
+
+    public void OnApplicationQuit()
+    {
+        Server.Stop();
     }
 
     public Player InstantiatePlayer()
     {
-        return Instantiate(playerPrefab, Vector3.zero, Quaternion.identity).GetComponent<Player>();
+        return Instantiate(playerPrefab, new Vector3(0f, 0.5f, 0f), Quaternion.identity).GetComponent<Player>();
     }
 }

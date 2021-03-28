@@ -10,6 +10,7 @@ public enum ServerPackets
     spawnPlayer,
     playerPosition,
     playerRotation,
+    playerDisconnected,
     udpTest
 }
 

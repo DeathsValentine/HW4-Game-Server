@@ -62,7 +62,7 @@ public class Client
             }
             catch (Exception _ex)
             {
-                Debug.Log("Error sending data to player {id} via TCP: {_ex}");
+                Debug.Log($"Error sending data to player {id} via TCP: {_ex}");
             }
         }
 
@@ -85,7 +85,7 @@ public class Client
             }
             catch (Exception _ex)
             {
-                Debug.Log("Error receiving TCP data, ERROR: {_ex}");
+                Debug.Log($"Error receiving TCP data, ERROR: {_ex}");
                 Server.clients[id].Disconnect();
             }
         }
@@ -215,11 +215,17 @@ public class Client
 
     private void Disconnect()
     {
-        Debug.Log("{tcp.socket.Client.RemoteEndPoint} has disconnected");
+        Debug.Log($"{tcp.socket.Client.RemoteEndPoint} has disconnected");
 
-        UnityEngine.Object.Destroy(player.gameObject);
-        player = null;
+        ThreadManager.ExecuteOnMainThread(() => 
+        {
+            UnityEngine.Object.Destroy(player.gameObject);
+            player = null;
+        });
+        
         tcp.Disconnect();
         udp.Disconnect();
+
+        ServerSend.PlayerDisconnected(id);
     }
 }

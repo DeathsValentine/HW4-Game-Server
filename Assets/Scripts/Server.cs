@@ -33,7 +33,7 @@ public class Server
         UDPListener = new UdpClient(port);
         UDPListener.BeginReceive(UDPReceiveCallback, null);
 
-        Debug.Log("Server started on {port}");
+        Debug.Log($"Server started on {port}");
     }
 
     private static void TCPConnectCallback(IAsyncResult _result)
@@ -41,7 +41,7 @@ public class Server
         TcpClient _client = TCPListener.EndAcceptTcpClient(_result);
         TCPListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null); // Originally TCPConnectionCallback
 
-        Debug.Log("Incoming connetion from {_client.Client.RemoteEndPoint}...");
+        Debug.Log($"Incoming connetion from {_client.Client.RemoteEndPoint}...");
 
         for (int i = 1; i <= maxPlayers; i++)
         {
@@ -52,7 +52,7 @@ public class Server
             }
         }
 
-        Debug.Log("{_client.Client.RemoteEndPoint} failed to connect: Server full");
+        Debug.Log($"{_client.Client.RemoteEndPoint} failed to connect: Server full");
     }
 
     private static void UDPReceiveCallback(IAsyncResult _result)
@@ -90,7 +90,7 @@ public class Server
         }
         catch (Exception _ex)
         {
-            Debug.Log("Error receiving UDP data: {_ex}");
+            Debug.Log($"Error receiving UDP data: {_ex}"); //shows exception in unity console on stop
         }
     }
 
@@ -105,7 +105,7 @@ public class Server
         }
         catch (Exception _ex)
         {
-            Debug.Log("Error sending data to {_clientEndPoint} via UDP: {_ex}");
+            Debug.Log($"Error sending data to {_clientEndPoint} via UDP: {_ex}");
         }
     }
 
@@ -123,5 +123,11 @@ public class Server
             };
 
         Debug.Log("Initialized packets.");
+    }
+
+    public static void Stop()
+    {
+        TCPListener.Stop();
+        UDPListener.Close();
     }
 }
