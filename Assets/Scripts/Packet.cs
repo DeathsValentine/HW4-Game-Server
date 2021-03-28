@@ -11,6 +11,7 @@ public enum ServerPackets
     playerPosition,
     playerRotation,
     playerDisconnected,
+    playerHealth,
     udpTest
 }
 
@@ -18,6 +19,8 @@ public enum ClientPackets
 {
     welcomeReceived = 1,
     playerMovement,
+    playerDisconnected,
+    playerShoot,
     udpTestReceived
 }
 

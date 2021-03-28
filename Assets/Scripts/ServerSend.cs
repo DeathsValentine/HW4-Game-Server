@@ -112,13 +112,22 @@ public class ServerSend
 
     public static void PlayerDisconnected(int playerId)
     {
-        using (Packet _packet = new Packet((int)ServerPackets.PlayerDisconnected))
+        using (Packet _packet = new Packet((int)ServerPackets.playerDisconnected))
         {
             _packet.Write(playerId);
             SendTCPDataToAll(_packet);
         }
     }
 
+    public static void PlayerHealth(Player _player)
+    {
+        using (Packet _packet = new Packet((int)ServerPackets.playerHealth))
+        {
+            _packet.Write(_player.id);
+            _packet.Write(_player.health);
+            SendTCPDataToAll(_packet);
+        }
+    }
     public static void UDPTest(int _toClient)
     {
         using (Packet _packet = new Packet((int)ServerPackets.udpTest))
