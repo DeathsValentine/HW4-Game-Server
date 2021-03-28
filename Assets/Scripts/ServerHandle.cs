@@ -39,7 +39,13 @@ public class ServerHandle
         Server.clients[_fromClient].player.Shoot(_shootDirection);
     }
 
+    public static void PlayerThrowItem(int _fromClient, Packet _packet)
+    {
+        Vector3 _throwDirection = _packet.ReadVector3();
 
+        Server.clients[_fromClient].player.ThrowItem(_throwDirection);
+    }
+    
     public static void UDPTestReceived(int _fromClient, Packet _packet)
     {
         string _msg = _packet.ReadString();
